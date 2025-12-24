@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+option go_package=".";
+
+package pb;
+
+message SetRequest{
+    string group =1;
+    string key=2;
+    bytes value=3;
+}
+
+message GetRequest{
+    string group=1;
+    string key=2;
+}
+
+message DeleteRequest{
+    string group=1;
+    string key=2;
+}
+
+message SetResponse{
+    bool flag=1;
+}
+
+message GetResponse{
+    bytes value=1;
+    bool flag=2;
+}
+
+message DeleteResponse{
+    bool flag=1;
+}
+service MyCache{
+    rpc Set(SetRequest) returns (SetResponse);
+    rpc Get(GetRequest) returns (GetResponse);
+    rpc Delete(DeleteRequest) returns (DeleteResponse);
+}
