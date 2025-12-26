@@ -11,21 +11,23 @@ import (
 )
 
 type Client struct {
-	addr      string
-	conn      *grpc.ClientConn
-	rpcClient pb.MyCacheClient
+	addr        string
+	serviceName string
+	conn        *grpc.ClientConn
+	rpcClient   pb.MyCacheClient
 }
 
-func NewClient(addr string) *Client {
+func NewClient(addr string, serviceName string) *Client {
 	conn, err := grpc.NewClient(addr, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("connect to addr:%s error:%v", addr, err)
 	}
 
 	c := &Client{
-		addr:      addr,
-		conn:      conn,
-		rpcClient: pb.NewMyCacheClient(conn),
+		addr:        addr,
+		serviceName: serviceName,
+		conn:        conn,
+		rpcClient:   pb.NewMyCacheClient(conn),
 	}
 
 	return c
